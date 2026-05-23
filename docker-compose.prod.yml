@@ -59,11 +59,11 @@ services:
       minio:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/health"]
-      interval: 30s
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"]
+      interval: 15s
       timeout: 5s
-      retries: 3
-      start_period: 60s
+      retries: 6
+      start_period: 120s
 
   frontend:
     build:
@@ -79,7 +79,7 @@ services:
       - "80"
     depends_on:
       backend:
-        condition: service_healthy
+        condition: service_started
 
 volumes:
   postgres_data:
