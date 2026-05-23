@@ -1,3 +1,7 @@
+# Production Docker Compose stack for Coolify (https://coolify.rodion.com.co)
+# - Domains routed by SERVICE_FQDN_* and docker_compose_domains (set in Coolify UI)
+# - Secrets injected via Coolify env vars; never commit real values to this file
+# - Auto-deploy on push to main via GitHub webhook
 services:
   postgres:
     image: postgres:16-alpine
